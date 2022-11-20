@@ -1,0 +1,67 @@
+<div>
+    <h2>Cadastro de clientes</h2>
+</div>
+
+<section mat-dialog-content>
+    <form action="" [formGroup]="formCliente" (ngSubmit)="salvar()">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Nome</mat-label>
+            <input type="text" placeholder="EX: Diogo Mine" matInput formControlName="nome">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Telefone</mat-label>
+            <input type="text" maxlength="11" minlength="11" placeholder="Ex: (99) 99999-9999" matInput
+                formControlName="telefone">
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button color="accent" id="salvar" [disabled]="formCliente.invalid">
+            Salvar</button>
+
+        <button type="reset" mat-raised-button color="primary">
+            Limpar Campos</button>
+    </form>
+</section>
+
+<div class="busca">
+    <mat-form-field>
+        <mat-label>Busca</mat-label>
+        <input matInput (keyup)="busca($event)" placeholder="Buscar cliente" #input>
+    </mat-form-field>
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="mudarBusca($event)">
+
+    <ng-container matColumnDef="idCliente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Id">
+            Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.idCliente}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por nome">
+            Nome </th>
+        <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="telefone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por tell"> Telefone
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.telefone}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Deletar</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" matTooltip="Deletar Cliente" (click)="deletarCliente(element)"
+                matTooltipPosition="right">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
